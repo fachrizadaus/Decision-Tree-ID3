@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Decision Tree - ID3</title>
+    <link rel="icon" href="https://image.flaticon.com/icons/svg/660/660492.svg">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?libraries=visualization"></script> -->
+    <script src='https://www.google.com/jsapi?autoload={"modules":[{"name":"visualization","version":"1","packages":["orgchart"]}]}'></script>
+
+    <script src="algorithm/data.js"></script>
+    <script src="algorithm/algorithm.js"></script>
+    <script src="algorithm/draw.js"></script>
+
+    <style>
+      #canvas {
+        padding: 10px;
+        margin: 10px;
+        /* border-top: 2px solid red;
+        border-bottom: 2px solid red; */
+      }
+      button {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        width: 250px;
+        border-radius: 5px;
+      }
+      .header {
+        max-width: 1000px;
+        margin: auto;
+        text-align: center;
+      }
+      .content {
+        max-width: 1000px;
+        margin: auto;
+        align-items: center;
+        align-self: auto;
+        text-align: center;
+        align-content: center;
+      }
+      .col {
+        position: relative;
+        float: left;
+        text-align: center;
+        align-items: center;
+        align-content: center;
+        align-self: center;
+        width: 50%;
+        max-width: 490px;
+        padding-top: 10px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .row:after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+      table{
+        margin-right: auto;
+        margin-left: auto;
+      }
+    </style>
+
+  </head>
+  <body>
+    <div class="header">
+      <h1>ID3 Algorithm</h1>
+      <button id="startId3">
+        Start ID3 Algorithm
+      </button>
+      <button id="showData">
+        Show Data
+      </button>
+    </div>
+    <div class="content">
+      <div id="canvas"></div>
+      <div style="padding-left:10px;" class="row" id="dataDiv">
+        <div class="col">
+          <table width="95%" border="1" id="dtIn"></table>
+        </div>
+        <div class="col">
+          <table width="95%" border="1" id="dtOut"></table>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      var showed = false;
+      $(document).ready(function() {
+        var mods = algorithm(datas, "Diterima", toShow);
+        console.clear();
+        console.log("Document Ready");
+
+        $("#startId3").click(function(e) {
+          console.log("Starting ID3 Algorithm!");
+          
+          // e.preventDefault();
+          algorithm(datas, "Diterima", toShow);
+          drawGraph(mods, "canvas");
+
+          // console.clear();
+        });
+
+        $("#showData").click(function(e) {
+          $("#dataDiv").show();
+          if (showed == false) {
+            // document.getElementById('showData').disabled = true;
+            showTablesData(datas, $("#dtIn"), "Diterima", toShow, "TrainId");
+            showTablesPredict(q, $("#dtOut"), mods, "Diterima", toShow);
+            showed = true;
+          }
+          // console.clear();
+          console.log('Data Showed!');
+        })
+      });
+    </script>
+  </body>
+</html>
